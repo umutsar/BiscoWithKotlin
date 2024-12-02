@@ -1,4 +1,4 @@
-package com.zeugma.biscobt
+package com.zeugma.bisco
 
 import android.os.Bundle
 import android.widget.Button
@@ -40,7 +40,8 @@ fun openUsbConnection(
     val port: UsbSerialPort = driver.ports[0]
     port.open(connection)
 
-    // If you use like cdc protocol, baud rate, databits and other parameter doesn't matter.
+    // cdc gibi bir protokol kullanıyorsanız (baud rate hızı olmadan) baud rate, databits gibi değerlerin önemi yok.
+    //
     port.setParameters(115200, 8, UsbSerialPort.STOPBITS_1, UsbSerialPort.PARITY_NONE)
 
     var lastDataReceivedTime = System.currentTimeMillis()
@@ -126,9 +127,6 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-        val baglanButonu = findViewById<Button>(R.id.baglanButonu)
-        var num = 0
-
         val hizTextValue = findViewById<TextView>(R.id.hizTextValue)
         val sarjTextValue = findViewById<TextView>(R.id.sarjTextValue)
         val alinanMesafeTextValue = findViewById<TextView>(R.id.alinanMesafeTextValue)
@@ -138,22 +136,6 @@ class MainActivity : AppCompatActivity() {
         val harcananGucTextValue = findViewById<TextView>(R.id.harcananGucTextValue)
         val menzilTextValue = findViewById<TextView>(R.id.menzilTextValue)
 
-        baglanButonu.setOnClickListener {
-            num++
-            hizTextValue.text = (1 + num).toString()
-
-            openUsbConnection(
-                this,
-                hizTextValue,
-                sarjTextValue,
-                alinanMesafeTextValue,
-                voltageTextValue,
-                sicaklikTextValue,
-                maxPilVoltajiTextValue,
-                harcananGucTextValue,
-                menzilTextValue
-            )
-        }
 
         openUsbConnection(
             this,
